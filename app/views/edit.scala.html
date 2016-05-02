@@ -1,0 +1,55 @@
+@(form: Form[Post])
+@scripts = {
+    <script>
+            var problemEditor;
+            var solutionEditor;
+            var onLoadProblem = function (event) {
+                console.log("All resources finished loading! onLoadProblem");
+                problemEditor = event.contentWindow.editor;
+                problemEditor.setHTML($("#problem").text());
+            }
+
+            var onLoadSolution = function (event) {
+                console.log("All resources finished loading! onLoadSolution");
+                solutionEditor = event.contentWindow.editor;
+                solutionEditor.setHTML($("#solution").text());
+            }
+
+            function doSubmit() {
+                var problem = problemEditor.getHTML();
+                var solution = solutionEditor.getHTML();
+                console.log(problem);
+                console.log(solution);
+                $("#problem").text(problem);
+                $("#solution").text(solution);
+                return true;
+            }
+    </script>
+}
+@main("Edit " + form("title").value, scripts = scripts) {
+    <form action="@routes.HomeController.update(Long.parseLong(form("id").value()))" method="post" onsubmit="doSubmit()">
+        <input type="hidden" name="@form("id").name" value="@form("id").value">
+        <div class="login-input input-group @if(form("title").hasErrors){error}">
+            <input id="title" type="text" class="form-control" name="@form("title").name"
+            value="@form("title").value" placeholder="Title" required>
+            @if(form("title").hasErrors) {
+                <div class="error">
+                @{
+                    form("title").error.map { error => error.message }
+                }
+                </div>
+            }
+        </div>
+        <textarea style="display: none" id="problem" title="Problem" placeholder="Problem"
+        name="@form("problem").name">@form("problem").value</textarea>
+        <textarea style="display: none" id="solution" title="Solution" placeholder="Solution"
+        name="@form("solution").name">@form("solution").value</textarea>
+        <label for="iframe-problem">Problem</label>
+        <iframe id="iframe-problem" onload="onLoadProblem(this)" src="@routes.Assets.versioned("javascripts/document.html")"></iframe>
+        <label for="iframe-solution">Solution</label>
+        <iframe id="iframe-solution" onload="onLoadSolution(this)" src="@routes.Assets.versioned("javascripts/document.html")"></iframe>
+        <button class="btn btn-u btn-primary">Validate</button>
+    </form>
+
+
+}

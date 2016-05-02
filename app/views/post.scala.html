@@ -1,0 +1,16 @@
+@(post: Post)
+
+    @main(post.title) {
+        <h1>@post.title
+            @if(session().get("username") != null) {
+                <a class="btn btn-primary pull-right" href="@routes.HomeController.edit(post.id)">Edit</a>
+            }
+        </h1>
+
+        <h2>Problem</h2>
+        <p>@Html(post.problem)</p>
+        @if(post.solution != null && !post.solution.isEmpty) {
+            <h2>Solution</h2>
+            <p>@Html(post.solution)</p>
+        }
+    }
