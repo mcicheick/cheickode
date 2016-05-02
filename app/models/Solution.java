@@ -89,4 +89,24 @@ public class Solution {
         }
         return false;
     }
+
+    public boolean isAnagram(String s, String t) {
+        if(s.length() != t.length()) {
+            return false;
+        }
+        int[] all = new int[255];
+        for (int i = 0; i < s.length(); i++) {
+            all[s.charAt(i)]++;
+            all[t.charAt(i)]--;
+        }
+        for (int i = 0; i < t.length(); i++) {
+            if(all[s.charAt(i)] != 0) {
+                return false;
+            }
+            if(all[t.charAt(i)] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

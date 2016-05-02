@@ -29,7 +29,9 @@
 @main("Edit " + form("title").value, scripts = scripts) {
     <form action="@routes.HomeController.update(Long.parseLong(form("id").value()))" method="post" onsubmit="doSubmit()">
         <input type="hidden" name="@form("id").name" value="@form("id").value">
-        <div class="login-input input-group @if(form("title").hasErrors){error}">
+        <label for="title">Title</label>
+        <div class="input-group @if(form("title").hasErrors){error}">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-mark"></i></span>
             <input id="title" type="text" class="form-control" name="@form("title").name"
             value="@form("title").value" placeholder="Title" required>
             @if(form("title").hasErrors) {
