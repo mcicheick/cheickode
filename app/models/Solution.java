@@ -1,5 +1,7 @@
 package models;
 
+import java.util.HashSet;
+
 public class Solution {
     public boolean isValidSudoku(char[][] board) {
         int n = board.length;
@@ -58,5 +60,33 @@ public class Solution {
         for(int i = 0; i < nums.length; i++) {
             nums[i] = copyNums[i];
         }
+    }
+
+    public boolean canWinNim(int n) {
+        return n % 4 != 0;
+    }
+
+    public int maxProfit(int[] prices) {
+        if(prices.length == 0) {
+            return 0;
+        }
+        int profit = 0;
+        int min = prices[0];
+        for(int i = 0; i < prices.length; i++) {
+            min = Math.min(min, prices[i]);
+            profit = Math.max(profit, prices[i] - min);
+        }
+
+        return profit;
+    }
+
+    public boolean containsDuplicate(int[] nums) {
+        HashSet<Integer> set = new HashSet<Integer>();
+        for (int i = 0; i < nums.length; i++) {
+            if(!set.add(nums[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 }
