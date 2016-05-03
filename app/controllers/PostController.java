@@ -1,13 +1,11 @@
 package controllers;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import models.Post;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.*;
 
-import tools.Hash;
 import views.html.*;
 
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.List;
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
-public class HomeController extends Secure {
+public class PostController extends Secure {
 
     @Inject
     FormFactory factory;
@@ -56,7 +54,7 @@ public class HomeController extends Secure {
         }
         Post post = form.get();
         post.save();
-        return redirect(routes.HomeController.index());
+        return redirect(routes.PostController.index());
     }
 
     public Result show(Long id) {
@@ -84,7 +82,7 @@ public class HomeController extends Secure {
         fromDatabase.setProblem(post.problem);
         fromDatabase.setSolution(post.solution);
         fromDatabase.save();
-        return redirect(routes.HomeController.show(id));
+        return redirect(routes.PostController.show(id));
     }
 
     public Result delete() {

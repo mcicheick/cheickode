@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.*;
@@ -36,9 +33,9 @@ public class ApplicationTest {
 
     @Test
     public void renderTemplate() {
-        Content html = views.html.index.render("Your new application is ready.");
+        Content html = views.html.index.render(Collections.emptyList());
         assertEquals("text/html", html.contentType());
-        assertTrue(html.body().contains("Your new application is ready."));
+        assertTrue(html.body().contains(""));
     }
 
 

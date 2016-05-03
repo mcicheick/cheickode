@@ -27,7 +27,7 @@
     </script>
 }
 @main("Edit " + form("title").value, scripts = scripts) {
-    <form action="@routes.HomeController.update(Long.parseLong(form("id").value()))" method="post" onsubmit="doSubmit()">
+    <form action="@routes.PostController.update(Long.parseLong(form("id").value()))" method="post" onsubmit="doSubmit()">
         <input type="hidden" name="@form("id").name" value="@form("id").value">
         <label for="title">Title</label>
         <div class="input-group @if(form("title").hasErrors){error}">

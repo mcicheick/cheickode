@@ -3,7 +3,7 @@
     @main(post.title) {
         <h1>@post.title
             @if(session().get("username") != null) {
-                <a class="btn btn-primary pull-right" href="@routes.HomeController.edit(post.id)">Edit</a>
+                <a class="btn btn-primary pull-right" href="@routes.PostController.edit(post.id)">Edit</a>
             }
         </h1>
 

@@ -25,7 +25,7 @@
     </script>
 }
 @main("New Post", scripts = scripts) {
-    <form action="@routes.HomeController.post()" method="post" onsubmit="doSubmit()">
+    <form action="@routes.PostController.post()" method="post" onsubmit="doSubmit()">
         <input type="hidden" name="@form("id").name" value="@form("id").value">
 
         <label for="title">Title</label>
@@ -46,9 +46,9 @@
         <textarea style="display: none" id="solution" title="Solution" placeholder="Solution"
             name="@form("solution").name">@form("solution").value</textarea>
         <label for="iframe-problem">Problem</label>
-        <iframe id="iframe-problem" onload="onLoadProblem(this)" src="@routes.Assets.versioned("javascripts/document.html")"></iframe>
+        <iframe id="iframe-problem" onload="onLoadProblem(this)" seamless="true" src="@routes.Assets.versioned("javascripts/document.html")"></iframe>
         <label for="iframe-solution">Solution</label>
-        <iframe id="iframe-solution" onload="onLoadSolution(this)" src="@routes.Assets.versioned("javascripts/document.html")"></iframe>
+        <iframe id="iframe-solution" onload="onLoadSolution(this)" seamless="true" src="@routes.Assets.versioned("javascripts/document.html")"></iframe>
         <button class="btn btn-u btn-primary">Validate</button>
     </form>
 
