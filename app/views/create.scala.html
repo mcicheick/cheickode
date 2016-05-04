@@ -1,72 +1,12 @@
 @(form: Form[Post])
 
-    @scripts = {
-        <script>
-                var problemEditor;
-                var solutionEditor;
-
-                function doSubmit() {
-                    var problem = problemEditor.getHTML();
-                    var solution = solutionEditor.getHTML();
-                    console.log(problem);
-                    console.log(solution);
-                    $("#problem").text(problem);
-                    $("#solution").text(solution);
-                    return true;
-                }
-        </script>
-        <script>
-                $(document).ready(function () {
-
-                    problemEditor = new SquireUI({
-                        buildPath: '@routes.Assets.versioned("javascripts/")',
-                        div: 'div#div-problem',
-                        height: 200
-                    });
-
-                    problemEditor.setHTML(@form("problem").value);
-
-                    solutionEditor = new SquireUI({
-                        buildPath: '@routes.Assets.versioned("javascripts/")',
-                        div: 'div#div-solution',
-                        height: 300
-                    });
-
-                    solutionEditor.setHTML(@form("solution").value);
-                });
-        </script>
-    }
-    @main("New Post", scripts = scripts) {
-
-        <div id="form-div">
-            <form action="@routes.PostController.post()" method="post" onsubmit="return doSubmit()">
-                <input type="hidden" name="@form("id").name" value="@form("id").value">
-
-                <label for="title">Title</label>
-                <div class="input-group @if(form("title").hasErrors) {error}">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-mark"></i></span>
-                    <input id="title" type="text" class="form-control" name="@form("title").name"
-                    value="@form("title").value" placeholder="Title" required>
-                    @if(form("title").hasErrors) {
-                        <div class="error">
-                        @{
-                            form("title").error.map { error => error.message }
-                        }
-                        </div>
-                    }
-                </div>
-                <textarea style="display: none" id="problem" title="Problem" placeholder="Problem"
-                name="@form("problem").name">@form("problem").value</textarea>
-                <textarea style="display: none" id="solution" title="Solution" placeholder="Solution"
-                name="@form("solution").name">@form("solution").value</textarea>
-
-                <label for="div-problem">Problem</label>
-                <div id="div-problem"></div>
-
-                <label for="div-solution">Solution</label>
-                <div id="div-solution"></div>
-
-                <button class="btn btn-u btn-primary">Validate</button>
-            </form>
-        </div>
-    }
+@scripts = {
+    @editorScripts()
+}
+@main("New Post", scripts = scripts) {
+    <div id="form-div">
+        <form action="@routes.PostController.post()" method="post" onsubmit="return doSubmit()">
+            @editor(form)
+        </form>
+    </div>
+}

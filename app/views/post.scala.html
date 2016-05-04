@@ -1,15 +1,41 @@
 @(post: Post)
 
-    @main(post.title) {
+    @scripts = {
+        <script>
+                var deletePost = function (id) {
+                    var confirm = window.confirm("Do you want to continue?");
+                    if (confirm) {
+                        $.ajax({
+                            url: "/delete/" + id,
+                            type: 'post',
+                            success: function (data) {
+                                window.location.href = "/";
+                            },
+                            error: function (e, c) {
+                                console.log(e);
+                                console.log(c);
+                            }
+                        });
+                    }
+                    return false;
+                }
+        </script>
+    }
+
+    @main(post.title, scripts = scripts) {
         <h1>@post.title
             @if(session().get("username") != null) {
-                <a class="btn btn-primary pull-right" href="@routes.PostController.edit(post.id)">Edit</a>
+                <div class="actions pull-right">
+                    <a class="btn btn-primary" href="@routes.PostController.edit(post.id)">Edit</a>
+                    <a class="btn btn-danger" onclick="return deletePost(@post.id);" href="@routes.PostController.delete(post.id)">
+                        Delete</a>
+                </div>
             }
         </h1>
 
         <h2>Problem</h2>
         <p>@Html(post.problem)</p>
-        @if(post.solution != null && !post.solution.isEmpty) {
+        @if(post.solution != null && !post.solution.trim.isEmpty) {
             <h2>Solution</h2>
             <p>@Html(post.solution)</p>
         }

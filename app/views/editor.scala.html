@@ -1,55 +1,29 @@
-@()
-<!DOCTYPE html>
-<html lang="en" data-squireinit="true">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title></title>
-    <style type="text/css">
-    html {
-      height: 100%;
+@(form: Form[Post])
+
+<input type="hidden" name="@form("id").name" value="@form("id").value">
+
+<label for="title">Title</label>
+<div class="input-group @if(form("title").hasErrors) {error}">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-mark"></i></span>
+  <input id="title" type="text" class="form-control" name="@form("title").name"
+  value="@form("title").value" placeholder="Title" required>
+  @if(form("title").hasErrors) {
+    <div class="error">
+    @{
+      form("title").error.map { error => error.message }
     }
-    body {
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      height: 100%;
-      padding: 1em;
-      background: transparent;
-      color: #2b2b2b;
-      font: 13px/1.35 Helvetica, arial, sans-serif;
-      cursor: text;
-    }
-    a {
-      text-decoration: underline;
-    }
-    h1 {
-      font-size: 138.5%;
-    }
-    h2 {
-      font-size: 123.1%;
-    }
-    h3 {
-      font-size: 108%;
-    }
-    h1,h2,h3,p {
-      margin: 1em 0;
-    }
-    h4,h5,h6 {
-      margin: 0;
-    }
-    ul, ol {
-      margin: 0 1em;
-      padding: 0 1em;
-    }
-    blockquote {
-      border-left: 2px solid blue;
-      margin: 0;
-      padding: 0 10px;
-    }
-    </style>
-  </head>
-  <body contenteditable="true">
-    <script type="text/javascript" src="squire.js"></script>
-  </body>
-</html>
+    </div>
+  }
+</div>
+<textarea style="display: none" id="problem" title="Problem" placeholder="Problem"
+name="@form("problem").name">@form("problem").value</textarea>
+<textarea style="display: none" id="solution" title="Solution" placeholder="Solution"
+name="@form("solution").name">@form("solution").value</textarea>
+
+<label for="div-problem">Problem</label>
+<div id="div-problem"></div>
+
+<label for="div-solution">Solution</label>
+<div id="div-solution"></div>
+
+<button class="btn btn-u btn-primary">Validate</button>

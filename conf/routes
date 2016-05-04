@@ -11,6 +11,8 @@ POST        /post/:id            controllers.PostController.update(id: Long)
 GET         /post/:id            controllers.PostController.show(id: Long)
 GET         /edit/:id            controllers.PostController.edit(id: Long)
 
+POST        /delete/:id          controllers.PostController.delete(id: Long)
+
 GET         /login               controllers.PostController.login
 POST        /logon               controllers.PostController.logon
 GET         /logout              controllers.PostController.logout

@@ -1,9 +1,11 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import models.Post;
 import play.data.Form;
 import play.data.FormFactory;
+import play.libs.Json;
 import play.mvc.*;
 
 import views.html.*;
@@ -85,8 +87,21 @@ public class PostController extends Secure {
         return redirect(routes.PostController.show(id));
     }
 
-    public Result delete() {
-        return Results.TODO;
+    public Result delete(Long id) {
+        if (connected() == null) {
+            return unauthorized(unauthorized.render("Please connect to edit this post"));
+        }
+        Post post = Post.find.byId(id);
+        if (post == null) {
+            return notFound("Page not found");
+        }
+        post.delete();
+        ObjectNode result = Json.newObject();
+        result
+                .put("state", "success")
+                .put("message", post.title + " Deleted")
+        ;
+        return ok(result);
     }
 
 }
