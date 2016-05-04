@@ -1,0 +1,76 @@
+@(form: Form[_])
+
+@styles = {
+    <link rel="stylesheet" media="screen" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/social-buttons-3.css")">
+}
+
+@main("Login", styles = styles) {
+    <div class="container">
+        <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-info" >
+                <div class="panel-heading">
+                    <div class="panel-title">Connexion</div>
+                </div>
+
+                <div class="login-body panel-body" >
+
+                    @if(form.hasGlobalErrors) {
+                        <div id="login-alert" class="alert alert-danger col-sm-12">
+                        @{
+                            form.error("").message
+                        }
+                        </div>
+                    }
+
+                    <form action="@routes.PostController.logon()" id="loginform" class="form-horizontal" role="form" method="post">
+
+                        <div class="login-input input-group @if(form("username").hasErrors){error}">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input id="login-username" type="text" class="form-control" name="@form("username").name"
+                            value="@form("username").value" placeholder="username or email">
+                            @if(form("username").hasErrors) {
+                                <div class="error">
+                                @{
+                                    form("username").error.map { error => error.message }
+                                }
+                                </div>
+                            }
+                        </div>
+
+                        <div class="login-input input-group @if(form("password").hasErrors){error}">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="login-password" type="password" class="form-control" name="@form("password").name"
+                            placeholder="password">
+                            @if(form("password").hasErrors) {
+                                <div class="error">
+                                @{
+                                    form("password").error.map { error => error.message }
+                                }
+                                </div>
+                            }
+                        </div>
+
+
+                        <div class="input-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="login-remember" type="checkbox" name="remember" value="1"> Se rappeler de moi
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="login-button form-group">
+                                <!-- Button -->
+
+                            <div class="col-sm-12 controls">
+                                <button type="submit" id="btn-login" class="btn btn-success">Connexion </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}

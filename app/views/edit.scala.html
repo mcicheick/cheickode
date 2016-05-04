@@ -1,0 +1,10 @@
+@(form: Form[Post])
+
+@scripts = {
+    @editorScripts()
+}
+@main("Edit " + form("title").value, scripts = scripts) {
+    <form action="@routes.PostController.update(Long.parseLong(form("id").value()))" method="post" onsubmit="doSubmit()">
+        @editor(form)
+    </form>
+}

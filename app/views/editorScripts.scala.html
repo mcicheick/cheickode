@@ -1,0 +1,41 @@
+@()
+<script>
+        var problemEditor;
+        var solutionEditor;
+
+        function doSubmit() {
+            var problem = problemEditor.getHTML();
+            var solution = solutionEditor.getHTML();
+            console.log(problem);
+            console.log(solution);
+            $("#problem").text(problem);
+            $("#solution").text(solution);
+            return true;
+        }
+</script>
+<script>
+        $(document).ready(function () {
+
+            problemEditor = new SquireUI({
+                buildPath: '@routes.Assets.versioned("javascripts/")',
+                div: 'div#div-problem',
+                height: 200
+            });
+            var problem = $("#problem").text();
+            $("#problem").text("");
+            if (problem != undefined) {
+                problemEditor.setHTML(problem);
+            }
+
+            solutionEditor = new SquireUI({
+                buildPath: '@routes.Assets.versioned("javascripts/")',
+                div: 'div#div-solution',
+                height: 300
+            });
+            var solution = $("#solution").text();
+            $("#solution").text("")
+            if (solution != undefined) {
+                solutionEditor.setHTML(solution);
+            }
+        });
+</script>

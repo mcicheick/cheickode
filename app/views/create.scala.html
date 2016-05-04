@@ -1,0 +1,12 @@
+@(form: Form[Post])
+
+@scripts = {
+    @editorScripts()
+}
+@main("New Post", scripts = scripts) {
+    <div id="form-div">
+        <form action="@routes.PostController.post()" method="post" onsubmit="return doSubmit()">
+            @editor(form)
+        </form>
+    </div>
+}

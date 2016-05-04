@@ -1,0 +1,29 @@
+@(form: Form[Post])
+
+<input type="hidden" name="@form("id").name" value="@form("id").value">
+
+<label for="title">Title</label>
+<div class="input-group @if(form("title").hasErrors) {error}">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-mark"></i></span>
+  <input id="title" type="text" class="form-control" name="@form("title").name"
+  value="@form("title").value" placeholder="Title" required>
+  @if(form("title").hasErrors) {
+    <div class="error">
+    @{
+      form("title").error.map { error => error.message }
+    }
+    </div>
+  }
+</div>
+<textarea style="display: none" id="problem" title="Problem" placeholder="Problem"
+name="@form("problem").name">@form("problem").value</textarea>
+<textarea style="display: none" id="solution" title="Solution" placeholder="Solution"
+name="@form("solution").name">@form("solution").value</textarea>
+
+<label for="div-problem"><h2>Problem</h2></label>
+<div id="div-problem"></div>
+
+<label for="div-solution"><h2>Solution</h2></label>
+<div id="div-solution"></div>
+
+<button class="btn btn-u btn-primary">Validate</button>
