@@ -8,12 +8,15 @@ import play.Application;
  */
 public class HashAdapter implements Hash {
 
+    private final static String PLAIN = "plain";
+    private final static String BCRYPT = "bcrypt";
+
     private Hash hash;
 
     @Inject
     public HashAdapter(Application application) {
-        String hashKey = application.configuration().getString("tools.hash", "plain");
-        if (hashKey.equals("bcrypt")) {
+        String hashKey = application.configuration().getString("tools.hash", PLAIN);
+        if (hashKey.equals(BCRYPT)) {
             this.hash = new HashBCrypt();
         } else {
             this.hash = new HashPlain();
